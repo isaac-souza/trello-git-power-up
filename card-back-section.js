@@ -13,10 +13,20 @@ trello.card('all')
                     branchPrefix = 'Undefined'
                 }
 
+                let member = null
+
+                try {
+                    const label = slug(card.labels?.at(0)?.name ?? null)
+                    let member = typeof label === 'string' ? `/${label}` : ''
+                    member = member.toLocaleLowerCase()
+                } catch (error) {
+                    console.error({ error, card })
+                }
+
                 try {
                     const cardNumber = card.idShort
                     const cardSlug = getCardSlugFromUrl(card.url)
-                    branchName = `${branchPrefix}-${cardNumber}/${cardSlug}`
+                    branchName = `${branchPrefix}-${cardNumber}${member}/${cardSlug}`
                 } catch (error) {
                     branchName = 'Error'
                     console.error(error)
