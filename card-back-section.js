@@ -23,7 +23,7 @@ trello.card('all')
                     member = (typeof memberFullName === 'string' && memberFullName.length > 0)
                         ? `${memberFullName}/`
                         : ''
-                    member = slug(memberFullName).toLocaleLowerCase()
+                    member = slug(member).toLocaleLowerCase()
                 } catch (error) {
                     console.error({ error, card })
                     member = ''
