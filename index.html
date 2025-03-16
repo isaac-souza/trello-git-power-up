@@ -83,37 +83,35 @@
                     .then((board) => {
                         return trello.card('id', 'name', 'url')
                             .then((card) => {
-                                let branchName = 'Unknown'
-
                                 trello.get('board', 'shared', 'branchPrefix')
                                     .then(function (data) {
-                                        console.log('12312312312312 branchPrefix', JSON.stringify(data, null, 2))
+                                        let branchName = 'Unknown'
+                                        let branchPrefix = JSON.stringify(data, null, 2)
+        
+                                        if (typeof branchPrefix !== 'string') {
+                                            branchPrefix = 'Undefined'
+                                        }
+        
+                                        try {
+                                            const cardNumber = getCardNumberFromUrl(card.url)
+                                            const cardSlug = getCardSlugFromUrl(card.url)
+                                            branchName = `${slug(branchPrefix)}-${cardNumber}/${cardSlug}`
+                                        } catch (error) {
+                                            branchName = 'Error'
+                                            console.error(error)
+                                        }
+        
+                                        return {
+                                            title: branchName,
+                                            icon: GRAY_ICON,
+                                            content: {
+                                                type: 'iframe',
+                                                url: trello.signUrl('./dummy.html'),
+                                                height: 10,
+                                            },
+                                        }
                                     })
                                 
-                                let branchPrefix = JSON.stringify(data, null, 2)
-
-                                if (typeof branchName !== 'string') {
-                                    branchPrefix = 'Undefined'
-                                }
-
-                                try {
-                                    const cardNumber = getCardNumberFromUrl(card.url)
-                                    const cardSlug = getCardSlugFromUrl(card.url)
-                                    branchName = `${slug(branchPrefix)}-${cardNumber}/${cardSlug}`
-                                } catch (error) {
-                                    branchName = 'Error'
-                                    console.error(error)
-                                }
-
-                                return {
-                                    title: branchName,
-                                    icon: GRAY_ICON,
-                                    content: {
-                                        type: 'iframe',
-                                        url: trello.signUrl('./dummy.html'),
-                                        height: 10,
-                                    },
-                                }
                             })
                     })
             },
