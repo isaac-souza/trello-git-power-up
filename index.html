@@ -64,28 +64,28 @@
                             .then((card) => {
                                 return trello.get('board', 'shared', 'branchPrefix')
                                     .then(function (branchPrefix) {
-                                        let branchName = 'Unknown'
+                                        // let branchName = 'Unknown'
 
-                                        if (typeof branchPrefix !== 'string') {
-                                            branchPrefix = 'Undefined'
-                                        }
+                                        // if (typeof branchPrefix !== 'string') {
+                                        //     branchPrefix = 'Undefined'
+                                        // }
         
-                                        try {
-                                            const cardNumber = getCardNumberFromUrl(card.url)
-                                            const cardSlug = getCardSlugFromUrl(card.url)
-                                            branchName = `${branchPrefix}-${cardNumber}/${cardSlug}`
-                                        } catch (error) {
-                                            branchName = 'Error'
-                                            console.error(error)
-                                        }
+                                        // try {
+                                        //     const cardNumber = getCardNumberFromUrl(card.url)
+                                        //     const cardSlug = getCardSlugFromUrl(card.url)
+                                        //     branchName = `${branchPrefix}-${cardNumber}/${cardSlug}`
+                                        // } catch (error) {
+                                        //     branchName = 'Error'
+                                        //     console.error(error)
+                                        // }
         
                                         return {
-                                            title: branchName,
+                                            title: 'Git Repo & Task Info',
                                             icon: GRAY_ICON,
                                             content: {
                                                 type: 'iframe',
                                                 url: trello.signUrl('./card-back-section.html'),
-                                                height: 50,
+                                                height: 100,
                                             },
                                         }
                                     })
