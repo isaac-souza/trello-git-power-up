@@ -58,11 +58,25 @@
         function getCardSlugFromUrl(url) {
             const cardPath = getCardPathFromUrl(url)
             const cardNumber = getCardNumberFromUrl(url)
-            
+
             return cardPath.replace(`${cardNumber}-`, '')
         }
 
         TrelloPowerUp.initialize({
+            'card-buttons': function (trello, options) {
+                return [
+                    {
+                        icon: GRAY_ICON,
+                        text: 'Branch Prefix',
+                        callback: function (trello) {
+                            return trello.popup({
+                                title: 'Branch Prefix',
+                                url: 'branch-prefix.html',
+                            });
+                        },
+                    },
+                ];
+            },
             'card-back-section': function (trello, options) {
                 return trello.board('id', 'name')
                     .then((board) => {
