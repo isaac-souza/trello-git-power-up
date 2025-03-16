@@ -87,6 +87,10 @@
                                     .then(function (data) {
                                         let branchName = 'Unknown'
                                         let branchPrefix = JSON.stringify(data, null, 2)
+
+                                        console.log('data', data)
+                                        console.log('branchPrefix', branchPrefix)
+                                        console.log('branchName', branchName)
         
                                         if (typeof branchPrefix !== 'string') {
                                             branchPrefix = 'Undefined'
