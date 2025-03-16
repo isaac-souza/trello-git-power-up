@@ -6,9 +6,9 @@ trello.board('id', 'name')
             .then((card) => {
                 return trello.get('board', 'shared', 'branchPrefix')
                     .then(function (branchPrefix) {
-                        trello.board("all")
-                            .then(function (board) {
-                                console.log('board all', JSON.stringify(board, null, 2))
+                        trello.card("all")
+                            .then(function (card) {
+                                console.log('card all', JSON.stringify(card, null, 2))
                             })
 
                         // --------------------------------
