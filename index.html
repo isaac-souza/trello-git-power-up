@@ -83,15 +83,10 @@
                     .then((board) => {
                         return trello.card('id', 'name', 'url')
                             .then((card) => {
-                                trello.get('board', 'shared', 'branchPrefix')
-                                    .then(function (data) {
+                                return trello.get('board', 'shared', 'branchPrefix')
+                                    .then(function (branchPrefix) {
                                         let branchName = 'Unknown'
-                                        let branchPrefix = JSON.stringify(data, null, 2)
 
-                                        console.log('data', data)
-                                        console.log('branchPrefix', branchPrefix)
-                                        console.log('branchName', branchName)
-        
                                         if (typeof branchPrefix !== 'string') {
                                             branchPrefix = 'Undefined'
                                         }
