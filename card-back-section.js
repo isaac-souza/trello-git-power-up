@@ -6,6 +6,11 @@ trello.board('id', 'name')
             .then((card) => {
                 return trello.get('board', 'shared', 'branchPrefix')
                     .then(function (branchPrefix) {
+                        return trello.board("all")
+                            .then(function (board) {
+                                console.log('board all', JSON.stringify(board, null, 2))
+                            })
+
                         // --------------------------------
                         // Branch name, ex: eng-123/custom-fields-v1
                         // --------------------------------
