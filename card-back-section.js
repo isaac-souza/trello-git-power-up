@@ -16,7 +16,10 @@ trello.card('all')
                 let member = null
 
                 try {
-                    const memberFullName = slug(card.labels?.at(0)?.fullName ?? null)
+                    const memberFullName = card.members.length > 0
+                        ? slug(card.members?.at(0)?.fullName ?? null)
+                        : null
+
                     member = (typeof memberFullName === 'string' && memberFullName.length > 0)
                         ? `/${memberFullName}`
                         : ''
