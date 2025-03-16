@@ -46,14 +46,6 @@ trello.board('id', 'name')
             })
     })
 
-// trello.render(function () {
-//     trello.sizeTo('#branchNameForm').done()
-// })
-    
-// trello.render(function () {
-//     trello.sizeTo('#taskCodeInput').done()
-// })
-
 trello.render(function () {
-    trello.sizeTo('#infoSectionContainer').done()
+    trello.sizeTo('#inputsContainer').done()
 })

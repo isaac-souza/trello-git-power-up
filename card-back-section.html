@@ -9,10 +9,12 @@
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
 </head>
 <body>
-    <div id="infoSectionContainer">
-        <div id="taskCodeContainer"></div>
-        <div id="branchNameContainer"></div>
-    </div>
+    <form id="inputsContainer">
+        <label for="taskCodeInput">Task Code</label>
+        <input type="text" readonly id="taskCodeInput" style="user-select: all;">
+        <label for="branchNameInput">Branch Name</label>
+        <input type="text" readonly id="branchNameInput" style="user-select: all;">
+    </form>
     <script src="./shared.js"></script>
     <script src="./card-back-section.js"></script>
 </body>
