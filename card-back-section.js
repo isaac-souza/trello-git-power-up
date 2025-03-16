@@ -6,6 +6,9 @@ trello.board('id', 'name')
             .then((card) => {
                 return trello.get('board', 'shared', 'branchPrefix')
                     .then(function (branchPrefix) {
+                        // --------------------------------
+                        // Branch name, ex: eng-123/custom-fields-v1
+                        // --------------------------------
                         let branchName = 'Unknown'
 
                         if (typeof branchPrefix !== 'string') {
@@ -22,11 +25,30 @@ trello.board('id', 'name')
                         }
 
                         window.branchNameInput.value = branchName
+
+                        // --------------------------------
+                        // Task code, ex: ENG-123
+                        // --------------------------------
+
+                        let taskCode = 'Unknown'
+
+                        try {
+                            const cardNumber = getCardNumberFromUrl(card.url)
+                            taskCode = `${branchPrefix}-${cardNumber}`
+                            taskCode = taskCode.toUpperCase()
+                        } catch (error) {
+                            
+                        }
+
+                        window.taskCodeInput.value = branchName
                     })
-                
             })
     })
 
 trello.render(function () {
     trello.sizeTo('#branchNameForm').done()
+})
+    
+trello.render(function () {
+    trello.sizeTo('#taskCodeInput').done()
 })
