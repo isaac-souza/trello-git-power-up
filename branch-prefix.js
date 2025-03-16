@@ -11,6 +11,19 @@ window.branchPrefixForm.addEventListener('submit', function (event) {
         })
 })
 
+window.addEventListener('DOMContentLoaded', function () {
+    console.log('DOMContentLoaded')
+
+    trello
+        .get('board', 'shared', 'branchPrefix')
+        .then(function (branchPrefix) {
+            console.log('branchPrefix value')
+            console.log(branchPrefix)
+
+            window.branchPrefixInput.value = branchPrefix
+        })
+})
+
 trello.render(function () {
     trello.sizeTo('#branchPrefixForm').done()
 })
