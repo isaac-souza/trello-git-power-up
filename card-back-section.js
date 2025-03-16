@@ -6,7 +6,7 @@ trello.board('id', 'name')
             .then((card) => {
                 return trello.get('board', 'shared', 'branchPrefix')
                     .then(function (branchPrefix) {
-                        return trello.board("all")
+                        trello.board("all")
                             .then(function (board) {
                                 console.log('board all', JSON.stringify(board, null, 2))
                             })
