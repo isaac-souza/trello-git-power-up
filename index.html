@@ -5,40 +5,41 @@
 </head>
 <body>
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <script src="./shared.js"></script>
     <script>
         const GRAY_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-gray.svg';
 
-        /**
-         * Ex:
-         *      Input: https://trello.com/c/UIxRh6V7/13-disable-support-chat-when-impersonating-customer
-         *      Output: 13-disable-support-chat-when-impersonating-customer
-         */
-        function getCardPathFromUrl(url) {
-            return url.split('/').at(5) ?? 'Error'
-        }
+        // /**
+        //  * Ex:
+        //  *      Input: https://trello.com/c/UIxRh6V7/13-disable-support-chat-when-impersonating-customer
+        //  *      Output: 13-disable-support-chat-when-impersonating-customer
+        //  */
+        // function getCardPathFromUrl(url) {
+        //     return url.split('/').at(5) ?? 'Error'
+        // }
 
-        /**
-         * Ex:
-         *      Input: https://trello.com/c/UIxRh6V7/13-disable-support-chat-when-impersonating-customer
-         *      Output: 13
-         */
-        function getCardNumberFromUrl(url) {
-            const cardPath = getCardPathFromUrl(url)
+        // /**
+        //  * Ex:
+        //  *      Input: https://trello.com/c/UIxRh6V7/13-disable-support-chat-when-impersonating-customer
+        //  *      Output: 13
+        //  */
+        // function getCardNumberFromUrl(url) {
+        //     const cardPath = getCardPathFromUrl(url)
 
-            return cardPath.split('-').at(0) ?? 'Error'
-        }
+        //     return cardPath.split('-').at(0) ?? 'Error'
+        // }
 
-        /**
-         * Ex:
-         *      Input: https://trello.com/c/UIxRh6V7/13-disable-support-chat-when-impersonating-customer
-         *      Output: disable-support-chat-when-impersonating-customer
-         */
-        function getCardSlugFromUrl(url) {
-            const cardPath = getCardPathFromUrl(url)
-            const cardNumber = getCardNumberFromUrl(url)
+        // /**
+        //  * Ex:
+        //  *      Input: https://trello.com/c/UIxRh6V7/13-disable-support-chat-when-impersonating-customer
+        //  *      Output: disable-support-chat-when-impersonating-customer
+        //  */
+        // function getCardSlugFromUrl(url) {
+        //     const cardPath = getCardPathFromUrl(url)
+        //     const cardNumber = getCardNumberFromUrl(url)
 
-            return cardPath.replace(`${cardNumber}-`, '')
-        }
+        //     return cardPath.replace(`${cardNumber}-`, '')
+        // }
 
         TrelloPowerUp.initialize({
             // TODO: Refactor to "board-button"
