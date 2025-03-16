@@ -24,7 +24,7 @@ trello.board('id', 'name')
                             console.error(error)
                         }
 
-                        window.branchNameContainer.innerHTML = branchName
+                        window.branchNameInput.value = branchName
 
                         // --------------------------------
                         // Task code, ex: ENG-123
@@ -41,7 +41,7 @@ trello.board('id', 'name')
                             console.error(error)
                         }
 
-                        window.taskCodeContainer.innerHTML = taskCode
+                        window.taskCodeInput.value = taskCode
                     })
             })
     })
