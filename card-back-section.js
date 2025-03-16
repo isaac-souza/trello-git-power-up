@@ -32,7 +32,7 @@ trello.card('all')
                 try {
                     const cardNumber = card.idShort
                     const cardSlug = getCardSlugFromUrl(card.url)
-                    branchName = `${branchPrefix}-${cardNumber}${member}/${cardSlug}`
+                    branchName = `${member}${branchPrefix}-${cardNumber}/${cardSlug}`
                 } catch (error) {
                     branchName = 'Error'
                     console.error(error)
