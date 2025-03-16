@@ -37,10 +37,11 @@ trello.board('id', 'name')
                             taskCode = `${branchPrefix}-${cardNumber}`
                             taskCode = taskCode.toUpperCase()
                         } catch (error) {
-                            
+                            taskCode = 'Error'
+                            console.error(error)
                         }
 
-                        window.taskCodeInput.value = branchName
+                        window.taskCodeInput.value = taskCode
                     })
             })
     })
