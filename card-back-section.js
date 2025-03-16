@@ -4,6 +4,8 @@ trello.card('all')
     .then((card) => {
         return trello.get('board', 'shared', 'branchPrefix')
             .then(function (branchPrefix) {
+                console.log('card', card)
+
                 // --------------------------------
                 // Branch name, ex: eng-123/johndoe/feature/custom-fields-v1
                 // --------------------------------
@@ -17,10 +19,11 @@ trello.card('all')
 
                 try {
                     const label = slug(card.labels?.at(0)?.name ?? null)
-                    let member = typeof label === 'string' ? `/${label}` : ''
+                    member = typeof label === 'string' ? `/${label}` : ''
                     member = member.toLocaleLowerCase()
                 } catch (error) {
                     console.error({ error, card })
+                    member = ''
                 }
 
                 try {
