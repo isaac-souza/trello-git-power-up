@@ -25,25 +25,15 @@
                 ];
             },
             'card-back-section': function (trello, options) {
-                return trello.board('id', 'name')
-                    .then((board) => {
-                        return trello.card('id', 'name', 'url')
-                            .then((card) => {
-                                return trello.get('board', 'shared', 'branchPrefix')
-                                    .then(function (branchPrefix) {
-                                        return {
-                                            title: 'Git Repo & Task Info',
-                                            icon: GRAY_ICON,
-                                            content: {
-                                                type: 'iframe',
-                                                url: trello.signUrl('./card-back-section.html'),
-                                                height: 500,
-                                            },
-                                        }
-                                    })
-                                
-                            })
-                    })
+                return {
+                    title: 'Git Repo & Task Info',
+                    icon: GRAY_ICON,
+                    content: {
+                        type: 'iframe',
+                        url: trello.signUrl('./card-back-section.html'),
+                        height: 500,
+                    },
+                }
             },
             'card-badges': function (trello, options) {
                 return trello.board('id', 'name')
