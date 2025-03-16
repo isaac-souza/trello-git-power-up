@@ -9,28 +9,6 @@
         const GRAY_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-gray.svg';
 
         /**
-         * Ref: https://stackoverflow.com/a/5782563/6515007
-         */
-        function slug(value) {
-            value = value.replace(/^\s+|\s+$/g, '') // trim
-            value = value.toLowerCase()
-
-            // remove accents, swap ñ for n, etc
-            var from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿžþÞĐđßÆa·/_,:;"
-            var to = "AAAAAACCCDEEEEEEEEGIIIIINNOOOOOORRSSTUUUUUYYZaaaaaacccdeeeeeeeegiiiiinnooooooorrsstuuuuuyyzbBDdBAa------"
-
-            for (var i = 0, l = from.length; i < l; i++) {
-                value = value.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i))
-            }
-
-            value = value.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-                .replace(/\s+/g, '-') // collapse whitespace and replace by -
-                .replace(/-+/g, '-') // collapse dashes
-
-            return value
-        }
-
-        /**
          * Ex:
          *      Input: https://trello.com/c/UIxRh6V7/13-disable-support-chat-when-impersonating-customer
          *      Output: 13-disable-support-chat-when-impersonating-customer
@@ -94,7 +72,7 @@
                                         try {
                                             const cardNumber = getCardNumberFromUrl(card.url)
                                             const cardSlug = getCardSlugFromUrl(card.url)
-                                            branchName = `${slug(branchPrefix)}-${cardNumber}/${cardSlug}`
+                                            branchName = `${branchPrefix}-${cardNumber}/${cardSlug}`
                                         } catch (error) {
                                             branchName = 'Error'
                                             console.error(error)
@@ -119,24 +97,27 @@
                     .then((board) => {
                         return trello.card('id', 'name', 'url')
                             .then((card) => {
-                                let taskCode = 'Unknown'
-
-                                try {
-                                    const cardNumber = getCardNumberFromUrl(card.url)
-                                    taskCode = `${slug(board.name)}-${cardNumber}`
-                                    taskCode = taskCode.toUpperCase()
-                                } catch (error) {
-                                    taskCode = 'Error'
-                                    console.error(error)
-                                }
-
-                                return [
-                                    {
-                                        text: taskCode,
-                                        icon: GRAY_ICON,
-                                        color: 'light-gray',
-                                    },
-                                ];
+                                return trello.get('board', 'shared', 'branchPrefix')
+                                    .then(function (branchPrefix) {
+                                        let taskCode = 'Unknown'
+        
+                                        try {
+                                            const cardNumber = getCardNumberFromUrl(card.url)
+                                            taskCode = `${branchPrefix}-${cardNumber}`
+                                            taskCode = taskCode.toUpperCase()
+                                        } catch (error) {
+                                            taskCode = 'Error'
+                                            console.error(error)
+                                        }
+        
+                                        return [
+                                            {
+                                                text: taskCode,
+                                                icon: GRAY_ICON,
+                                                color: 'light-gray',
+                                            },
+                                        ];
+                                    })
                             })
                     })
             },
