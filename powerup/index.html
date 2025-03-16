@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <script>
+        const GRAY_ICON = 'https://cdn.hyperdev.com/us-east-1%3A3d31b21c-01a0-4da2-8827-4bc6e88b7618%2Ficon-gray.svg';
+
+        /**
+         * Ref: https://stackoverflow.com/a/5782563/6515007
+         */
+        function slug(value) {
+            value = value.replace(/^\s+|\s+$/g, '') // trim
+            value = value.toLowerCase()
+
+            // remove accents, swap ñ for n, etc
+            var from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿžþÞĐđßÆa·/_,:;"
+            var to = "AAAAAACCCDEEEEEEEEGIIIIINNOOOOOORRSSTUUUUUYYZaaaaaacccdeeeeeeeegiiiiinnooooooorrsstuuuuuyyzbBDdBAa------"
+
+            for (var i = 0, l = from.length; i < l; i++) {
+                value = value.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i))
+            }
+
+            value = value.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+                .replace(/\s+/g, '-') // collapse whitespace and replace by -
+                .replace(/-+/g, '-') // collapse dashes
+
+            return value
+        }
+
+        /**
+         * Ex:
+         *      Input: https://trello.com/c/UIxRh6V7/13-disable-support-chat-when-impersonating-customer
+         *      Output: 13-disable-support-chat-when-impersonating-customer
+         */
+        function getCardPathFromUrl(url) {
+            return url.split('/').at(5) ?? 'Error'
+        }
+
+        /**
+         * Ex:
+         *      Input: https://trello.com/c/UIxRh6V7/13-disable-support-chat-when-impersonating-customer
+         *      Output: 13
+         */
+        function getCardNumberFromUrl(url) {
+            const cardPath = getCardPathFromUrl(url)
+
+            return cardPath.split('-').at(0) ?? 'Error'
+        }
+
+        /**
+         * Ex:
+         *      Input: https://trello.com/c/UIxRh6V7/13-disable-support-chat-when-impersonating-customer
+         *      Output: disable-support-chat-when-impersonating-customer
+         */
+        function getCardSlugFromUrl(url) {
+            const cardPath = getCardPathFromUrl(url)
+            const cardNumber = getCardNumberFromUrl(url)
+            
+            return cardPath.replace(`${cardNumber}-`, '')
+        }
+
+        TrelloPowerUp.initialize({
+            'card-back-section': function (trello, options) {
+                return trello.board('id', 'name')
+                    .then((board) => {
+                        return trello.card('id', 'name', 'url')
+                            .then((card) => {
+                                let branchName = 'Unknown'
+
+                                try {
+                                    const cardNumber = getCardNumberFromUrl(card.url)
+                                    const cardSlug = getCardSlugFromUrl(card.url)
+                                    branchName = `${slug(board.name)}-${cardNumber}/${cardSlug}`
+                                } catch (error) {
+                                    branchName = 'Error'
+                                    console.error(error)
+                                }
+
+                                return {
+                                    title: branchName,
+                                    icon: GRAY_ICON,
+                                    content: {
+                                        type: 'iframe',
+                                        url: trello.signUrl('./dummy.html'),
+                                        height: 10,
+                                    },
+                                }
+                            })
+                    })
+            },
+            'card-badges': function (trello, options) {
+                return trello.board('id', 'name')
+                    .then((board) => {
+                        return trello.card('id', 'name', 'url')
+                            .then((card) => {
+                                let taskCode = 'Unknown'
+
+                                try {
+                                    const cardNumber = getCardNumberFromUrl(card.url)
+                                    taskCode = `${slug(board.name)}-${cardNumber}`
+                                    taskCode = taskCode.toUpperCase()
+                                } catch (error) {
+                                    taskCode = 'Error'
+                                    console.error(error)
+                                }
+
+                                return [
+                                    {
+                                        text: taskCode,
+                                        icon: GRAY_ICON,
+                                        color: 'light-gray',
+                                    },
+                                ];
+                            })
+                    })
+            },
+        })
+    </script>
+</body>
+</html>
